@@ -1,0 +1,18 @@
+
+<html >
+  <body>
+  {% load static %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+  {% for container in news_dis %}
+  {% if number == container.link%}
+  <h2> {{container.title}}</h2>
+  <p> {{container.created}}</p>
+  <p>{{container.text}}</p>
+  <a target="_blank" href="/news/"> news</a>
+{% endif%}
+  {%endfor%}
+
+
+
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>HyperNews</title>
+</head>
+<body>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<h2>Hyper news</h2>
+ <form action="/news/" method="get">
+     {% csrf_token %}
+     <input type="text" name="q">
+ </form>
+
+{% if text%}
+{%for obj in news_dis%}
+ {% if text in obj.title %}
+   <h4>{{obj.created|slice:":-9"}}</h4>
+<ul>     <li> <a href="/news/{{obj.link}}/">{{obj.title}}</a></li>
+</ul>
+{%endif%}
+{%endfor%}
+
+
+
+{%else%}
+{% regroup news_dis|dictsortreversed:"created" by created|slice:":-9" as news_list %}
+{% for container in news_list %}
+
+<h4>{{ container.grouper}}</h4>
+
+    <ul>
+        {% for elem in container.list %}
+    <li> <a href="/news/{{elem.link}}/">{{elem.title}}</a></li>
+        {%endfor %}
+    </ul>
+
+{% endfor %}
+
+{%endif%}
+<a href="/news/create/">Add</a>
+
+</body>
+</html>
